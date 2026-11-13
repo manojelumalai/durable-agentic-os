@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  temporal:
+    image: temporalio/auto-setup:1.24.2
+    ports:
+      - "7233:7233"
+      - "8233:8233"
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgres
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+    depends_on:
+      - postgres
+
+  temporal-ui:
+    image: temporalio/ui:2.26.0
+    ports:
+      - "8080:8080"
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+    depends_on:
+      - temporal
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=temporal
+      - POSTGRES_PASSWORD=temporal
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  durable-agent-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DURABLE_TEMPORAL_HOST=temporal:7233
+      - DURABLE_TASK_QUEUE=trading-desk-queue
+    depends_on:
+      - temporal
+      - redis
+
+volumes:
+  postgres_data:
