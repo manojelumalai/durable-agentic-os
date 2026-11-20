@@ -9,7 +9,7 @@
 [![Coverage](https://img.shields.io/badge/coverage-87.5%25-brightgreen)](https://github.com/manojelumalai/durable-agentic-os)
 
 **Architected & Authored by:** [Manoj Elumalai](https://linkedin.com/in/manojelumalai) *(AI Tech Lead & Platform Architect)*  
-*Drawing from production architectures processing **12M transactions in 30 minutes** across ASEAN at Maybank and **1 Billion+ conversations/month** with real-time voice streaming at tawk.to.*
+*Drawing from production architectures processing **12 million customer notifications and transactions in 30 minutes** across ASEAN at Maybank and **1 Billion+ conversations/month** with real-time voice streaming at tawk.to.*
 
 ---
 
